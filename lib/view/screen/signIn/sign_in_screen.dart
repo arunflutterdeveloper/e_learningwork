@@ -51,6 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
+
                   CountryPicker(
                     callBackFunction:
                         (String name, String dialCode, String flag) {},
