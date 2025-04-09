@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _phoneController = TextEditingController();
+  String countryCode = '+91'; // Default
   bool isFormValidated = false;
   final _shakeKey = GlobalKey<ShakeWidgetState>();
 
@@ -53,9 +55,24 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
 
                   CountryPicker(
-                    callBackFunction:
-                        (String name, String dialCode, String flag) {},
+                  CountryCodePicker(
+                    onChanged: (code) {
+                      countryCode = code.dialCode!;
+                    },
+                    initialSelection: 'IN',
+                    favorite: const ['IN', 'US'],
+                    showFlag: true,
+                    showDropDownButton: true,
+                    showOnlyCountryWhenClosed: false, // This allows dial code to be shown
+                    alignLeft: false,
+                    textStyle: const TextStyle(color: AppColors.black),
+                    padding: EdgeInsets.zero,
                   ),
+
+                  // CountryPicker(
+                  //   callBackFunction:
+                  //       (String name, String dialCode, String flag) {},
+                  // ),
                   Container(
                     height: 20,
                     width: 2,

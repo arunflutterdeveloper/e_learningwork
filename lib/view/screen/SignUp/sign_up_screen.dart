@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isFormValidated = false;
   String selectedValue = 'Mr.';
   final _shakeKey = GlobalKey<ShakeWidgetState>();
+  String countryCode = '+91'; // Default
 
   void _validateForm() {
     setState(() {
@@ -137,10 +139,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
-                  CountryPicker(
-                    callBackFunction:
-                        (String name, String dialCode, String flag) {},
+                  CountryCodePicker(
+                    onChanged: (code) {
+                      countryCode = code.dialCode!;
+                    },
+                    initialSelection: 'IN',
+                    favorite: const ['IN', 'US'],
+                    showFlag: true,
+                    showDropDownButton: true,
+                    showOnlyCountryWhenClosed: false, // This allows dial code to be shown
+                    alignLeft: false,
+                    textStyle: const TextStyle(color: AppColors.black),
+                    padding: EdgeInsets.zero,
                   ),
+
+                  // CountryPicker(
+                  //   callBackFunction:
+                  //       (String name, String dialCode, String flag) {},
+                  // ),
                   Container(
                     height: 20,
                     width: 2,
