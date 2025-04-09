@@ -8,6 +8,7 @@ class AssetsRes {
 
   static const String PLUGIN_NAME = 'e_learning';
   static const String PLUGIN_VERSION = '1.0.0+1';
+  static const String COUNTRYCODE = 'assets/countrycode.json';
   static const String DOORHUB_ASSETS = 'assets/doorhub-assets.zip';
   static const String EDEN_ASSETS = 'assets/eden-assets.zip';
   static const String APPLE = 'assets/images/apple.svg';

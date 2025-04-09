@@ -1,43 +1,129 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
+import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../../res/assets_res.dart';
 import '../../../utill/app_colors.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   bool isFormValidated = false;
+  String selectedValue = 'Mr.';
   final _shakeKey = GlobalKey<ShakeWidgetState>();
+
+  void _validateForm() {
+    setState(() {
+      if (_firstNameController.text.isNotEmpty &&
+          _lastNameController.text.isNotEmpty &&
+          _phoneController.text.isNotEmpty &&
+          _emailController.text.isNotEmpty) {
+        isFormValidated = true;
+      } else {
+        isFormValidated = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.kBackground,
+      appBar: AppBar(
+        backgroundColor: AppColors.kBackground,
+        leading: const BackButton(),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 100),
-            Center(child: Image.asset(AssetsRes.E_LOGO,height: 150,)),
-            const SizedBox(height: 62),
-            const Text('Sign in',
+            const SizedBox(height: 30),
+            Center(child: Image.asset(AssetsRes.E_LOGO,height: 150)),
+            const SizedBox(height: 32),
+            const Text('Sign Up',
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
                     color: Colors.black)),
             const SizedBox(height: 24),
+            const Text('First Name',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black)),
+            const SizedBox(height: 8),
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.kInput,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: [
+                  CustomDropDown(
+                    value: selectedValue,
+                    items: const ['Mr.', 'Mrs.'],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value!;
+                      });
+                    },
+                  ),
+                  Container(
+                    height: 20,
+                    width: 2,
+                    decoration: BoxDecoration(
+                      color: AppColors.kPrimary,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: AuthField(
+                        controller: _firstNameController,
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        hintText: 'First Name',
+                        onChanged: (value) {
+                          setState(() {});
+                          _validateForm();
+                          return value;
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text('Last Name',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black)),
+            const SizedBox(height: 8),
+            AuthField(
+              controller: _lastNameController,
+              hintText: 'Last Name',
+              onChanged: (value) {
+                setState(() {});
+                _validateForm();
+                return value;
+              },
+            ),
+            const SizedBox(height: 20),
             const Text('Phone Number',
                 style: TextStyle(
                     fontSize: 15,
@@ -64,34 +150,45 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: AuthField(
-                          controller: _phoneController,
-                          onChanged: (value) {
-                            if (value!.isNotEmpty) {
-                              setState(() {});
-                              isFormValidated = true;
-                              return value;
-                            } else {
-                              setState(() {});
-                              isFormValidated = false;
-                              return value;
-                            }
-                          },
-                          hintText: 'Phone Number',
-                          keyboardType: TextInputType.number,
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            FilteringTextInputFormatter.deny(RegExp(r'^0[0-9]* $'))
-                          ],
-                        ),
-                      )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: AuthField(
+                        controller: _phoneController,
+                        onChanged: (value) {
+                          setState(() {});
+                          _validateForm();
+                          return value;
+                        },
+                        hintText: 'Phone Number',
+                        keyboardType: TextInputType.number,
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp(r'^0[0-9]* $')),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
+            const Text('Email',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black)),
+            const SizedBox(height: 8),
+            AuthField(
+              controller: _emailController,
+              hintText: 'Email',
+              onChanged: (value) {
+                setState(() {});
+                _validateForm();
+                return value;
+              },
+            ),
+            const SizedBox(height: 60),
             ShakeWidget(
               key: _shakeKey,
               shakeOffset: 10.0,
@@ -103,51 +200,25 @@ class _SignInScreenState extends State<SignInScreen> {
                     _shakeKey.currentState?.shake();
                   }
                 },
-                text: 'Sign in',
+                text: 'Sign Up',
                 color: isFormValidated ? null : AppColors.kInput,
-              ),
-            ),
-            const SizedBox(height: 63),
-            const Center(
-                child: Text('Sign in with',
-                    style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.w600))),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.APPLE),
-                const SizedBox(width: 35),
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.FACEBOOK),
-                const SizedBox(width: 35),
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.GOOGLE),
-              ],
-            ),
-            const SizedBox(height: 65),
-            Center(
-              child: PrimaryButton(
-                onTap: () {},
-                text: 'Continue as a Guest',
-                color: AppColors.kInput,
-                width: 240,
               ),
             ),
             const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Create a New Account?',
+                const Text('Already have an Account?',
                     style: TextStyle(fontSize: 13, color: Color(0xFF9A9FA5))),
                 CustomTextButton(
                   onPressed: () {
-                    Get.offNamed('/SignUp');
+                    Get.offNamed('/SignIn');
 
                   },
-                  text: 'Sign Up',
-                )
+                  text: 'Sign In',
+                ),
               ],
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -156,105 +227,6 @@ class _SignInScreenState extends State<SignInScreen> {
 }
 
 
-abstract class ShakeAnimation<T extends StatefulWidget> extends State<T>
-    with SingleTickerProviderStateMixin {
-  ShakeAnimation(this.animationDuration);
-  final Duration animationDuration;
-  late final animationController =
-  AnimationController(vsync: this, duration: animationDuration);
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-}
-
-class ShakeWidget extends StatefulWidget {
-  const ShakeWidget({
-    required this.child,
-    required this.shakeOffset,
-    Key? key,
-    this.shakeCount = 3,
-    this.shakeDuration = const Duration(milliseconds: 400),
-  }) : super(key: key);
-  final Widget child;
-  final double shakeOffset;
-  final int shakeCount;
-  final Duration shakeDuration;
-
-  @override
-  // ignore: no_logic_in_create_state
-  ShakeWidgetState createState() => ShakeWidgetState(shakeDuration);
-}
-
-class ShakeWidgetState extends ShakeAnimation<ShakeWidget> {
-  ShakeWidgetState(Duration duration) : super(duration);
-
-  @override
-  void initState() {
-    super.initState();
-    animationController.addStatusListener(_updateStatus);
-  }
-
-  void _updateStatus(AnimationStatus status) {
-    if (status == AnimationStatus.completed) {
-      animationController.reset();
-    }
-  }
-
-  void shake() {
-    animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    animationController.removeStatusListener(_updateStatus);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController,
-      child: widget.child,
-      builder: (context, child) {
-        final sineValue =
-        sin(widget.shakeCount * 2 * pi * animationController.value);
-        return Transform.translate(
-          offset: Offset(sineValue * widget.shakeOffset, 0),
-          child: child,
-        );
-      },
-    );
-  }
-}
-
-class CustomSocialButton extends StatelessWidget {
-  final VoidCallback onTap;
-  final String icon;
-  const CustomSocialButton(
-      {super.key, required this.onTap, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 55,
-        width: 55,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(1),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.kNeutral01,
-          border: Border.all(color: AppColors.kNeutral03, width: 2),
-        ),
-        child: SvgPicture.asset(icon),
-      ),
-    );
-  }
-}
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -473,7 +445,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
           Container(
             padding: const EdgeInsets.all(15),
             decoration: const BoxDecoration(
-                color: AppColors.kPrimary,
+                color: Color(0xFF6759FF),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
             child: Stack(
               children: [
@@ -603,6 +575,118 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
   }
 }
 
+class CustomDropDown extends StatelessWidget {
+  final String? value;
+  final List<String> items;
+  final ValueChanged<String?>? onChanged;
+
+  const CustomDropDown({
+    Key? key,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 70,
+      child: Center(
+        child: DropdownButton<String>(
+          value: value,
+          icon: const Icon(Icons.keyboard_arrow_down),
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          underline: const SizedBox(),
+          dropdownColor: AppColors.kBackground,
+          onChanged: onChanged,
+          items: items.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value,
+                  style: const TextStyle(fontSize: 14, color: Colors.black)),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+abstract class ShakeAnimation<T extends StatefulWidget> extends State<T>
+    with SingleTickerProviderStateMixin {
+  ShakeAnimation(this.animationDuration);
+  final Duration animationDuration;
+  late final animationController =
+  AnimationController(vsync: this, duration: animationDuration);
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+}
+
+class ShakeWidget extends StatefulWidget {
+  const ShakeWidget({
+    required this.child,
+    required this.shakeOffset,
+    Key? key,
+    this.shakeCount = 3,
+    this.shakeDuration = const Duration(milliseconds: 400),
+  }) : super(key: key);
+  final Widget child;
+  final double shakeOffset;
+  final int shakeCount;
+  final Duration shakeDuration;
+
+  @override
+  // ignore: no_logic_in_create_state
+  ShakeWidgetState createState() => ShakeWidgetState(shakeDuration);
+}
+
+class ShakeWidgetState extends ShakeAnimation<ShakeWidget> {
+  ShakeWidgetState(Duration duration) : super(duration);
+
+  @override
+  void initState() {
+    super.initState();
+    animationController.addStatusListener(_updateStatus);
+  }
+
+  void _updateStatus(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      animationController.reset();
+    }
+  }
+
+  void shake() {
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.removeStatusListener(_updateStatus);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController,
+      child: widget.child,
+      builder: (context, child) {
+        final sineValue =
+        sin(widget.shakeCount * 2 * pi * animationController.value);
+        return Transform.translate(
+          offset: Offset(sineValue * widget.shakeOffset, 0),
+          child: child,
+        );
+      },
+    );
+  }
+}
+
 class AuthField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -628,7 +712,8 @@ class AuthField extends StatelessWidget {
           fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
-          filled: false,
+          filled: true,
+          fillColor: AppColors.kInput,
           hintText: hintText,
           hintStyle: const TextStyle(
               fontSize: 14,

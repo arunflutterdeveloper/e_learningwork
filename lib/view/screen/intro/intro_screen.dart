@@ -6,6 +6,8 @@ import '../../../utill/dimensions.dart';
 import '../../widgets/custom_text_bold.dart';
 import '../signIn/sign_in_screen.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+
 
 
 class IntroScreen extends StatefulWidget {
@@ -29,10 +31,7 @@ class IntroScreenState extends State<IntroScreen> {
         actions: [
           SkipButton(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
+              Get.offNamed('/SignIn');
             },
           ),
           const SizedBox(width: 16),
@@ -84,22 +83,12 @@ class IntroScreenState extends State<IntroScreen> {
           })
               : PrimaryButton(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
+              Get.toNamed('/SignIn');
             },
             width: 166,
             text: 'Get Started',
           ),
            Gap(20),
-          ElevatedButton(onPressed: (){
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => SignInScreen()),
-            );
-
-          }, child: Text("ewfw"))
         ],
 
       ),
@@ -130,15 +119,18 @@ class PrimaryButton extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 50,
-      alignment: Alignment.center,
-      width: width ?? double.maxFinite,
-      decoration: BoxDecoration(
-          color: color ?? AppColors.kPrimary,
-          borderRadius: BorderRadius.circular(borderRadius ?? 10),
-          border: isBorder ? Border.all(color: AppColors.kHint) : null),
-      child: CustomTextBold(text,fontSize: fontSize?? 15,),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height ?? 50,
+        alignment: Alignment.center,
+        width: width ?? double.maxFinite,
+        decoration: BoxDecoration(
+            color: color ?? AppColors.kPrimary,
+            borderRadius: BorderRadius.circular(borderRadius ?? 10),
+            border: isBorder ? Border.all(color: AppColors.kHint) : null),
+        child: CustomTextBold(text,fontSize: fontSize?? 15,),
+      ),
     );
   }
 }
@@ -259,29 +251,44 @@ class _OnboardingCardState extends State<OnboardingCard>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _slideAnimation,
-      child: Column(
-        children: [
-          const Spacer(),
-          Image.asset(
-            widget.onboarding.image,
-            width: double.maxFinite,
-            fit: BoxFit.fitWidth,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            widget.onboarding.title,
-            style: const TextStyle(
-                fontSize: 24, fontWeight: FontWeight.w700, color: Colors.black),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            widget.onboarding.description,
-            style: const TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
-            textAlign: TextAlign.center,
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          children: [
+            const Spacer(),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                widget.onboarding.image,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 32),
+            Text(
+              widget.onboarding.title,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+                height: 1.3,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              widget.onboarding.description,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                color: Colors.black54,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const Spacer(flex: 2),
+          ],
+        ),
       ),
     );
   }
@@ -312,16 +319,23 @@ class SkipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingDefault, vertical: Dimensions.paddingExtraSmall),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.borderRadiusXLarge),
-          color: AppColors.kAccent4,
-        ),
-        child: const Text(
-          'Skip',
-          style: TextStyle(
-              fontSize: Dimensions.fontSizeDefault, fontWeight: FontWeight.w400),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.paddingDefault,
+              vertical: Dimensions.paddingExtraSmall),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimensions.borderRadiusXLarge),
+            color: AppColors.kAccent4,
+          ),
+          child: const Text(
+            'Skip',
+            style: TextStyle(
+              fontSize: Dimensions.fontSizeDefault,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         ),
       ),
     );

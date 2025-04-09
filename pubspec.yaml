@@ -92,8 +92,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
   assets:
-    - assets/doorhub-assets.zip
-    - assets/eden-assets.zip
+    - assets/countrycode.json
     - assets/images/apple.svg
     - assets/images/e_logo.png
     - assets/images/facebook.svg
