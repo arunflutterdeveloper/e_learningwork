@@ -3,11 +3,10 @@ import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../res/assets_res.dart';
 import '../../../utill/app_colors.dart';
+import '../../../utill/images_paths.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -32,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 100),
-            Center(child: Image.asset(AssetsRes.E_LOGO,height: 150,)),
+            Center(child: Image.asset(AppImagePath.E_LOGO,height: 150,)),
             const SizedBox(height: 62),
             const Text('Sign in',
                 style: TextStyle(
@@ -53,8 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
-
-                  CountryPicker(
                   CountryCodePicker(
                     onChanged: (code) {
                       countryCode = code.dialCode!;
@@ -117,6 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: PrimaryButton(
                 onTap: () {
                   if (isFormValidated) {
+                    Get.toNamed("/DashBoard");
                   } else {
                     _shakeKey.currentState?.shake();
                   }
@@ -134,17 +132,19 @@ class _SignInScreenState extends State<SignInScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.APPLE),
+                CustomSocialButton(onTap: () {}, icon: AppImagePath.APPLE),
                 const SizedBox(width: 35),
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.FACEBOOK),
+                CustomSocialButton(onTap: () {}, icon: AppImagePath.FACEBOOK),
                 const SizedBox(width: 35),
-                CustomSocialButton(onTap: () {}, icon: AssetsRes.GOOGLE),
+                CustomSocialButton(onTap: () {}, icon: AppImagePath.GOOGLE),
               ],
             ),
             const SizedBox(height: 65),
             Center(
               child: PrimaryButton(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed("/DashBoard");
+                },
                 text: 'Continue as a Guest',
                 color: AppColors.kInput,
                 width: 240,
@@ -296,20 +296,25 @@ class PrimaryButton extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 50,
-      alignment: Alignment.center,
-      width: width ?? double.maxFinite,
-      decoration: BoxDecoration(
-          color: color ?? AppColors.kPrimary,
-          borderRadius: BorderRadius.circular(borderRadius ?? 10),
-          border: isBorder ? Border.all(color: AppColors.kHint) : null),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-          fontSize: fontSize ?? 15,
+    return GestureDetector(
+      onTap: (){
+        onTap();
+      },
+      child: Container(
+        height: height ?? 50,
+        alignment: Alignment.center,
+        width: width ?? double.maxFinite,
+        decoration: BoxDecoration(
+            color: color ?? AppColors.red,
+            borderRadius: BorderRadius.circular(borderRadius ?? 10),
+            border: isBorder ? Border.all(color: AppColors.kHint) : null),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontSize: fontSize ?? 15,
+          ),
         ),
       ),
     );

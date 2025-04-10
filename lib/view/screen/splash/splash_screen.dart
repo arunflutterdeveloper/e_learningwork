@@ -4,8 +4,7 @@ import 'package:e_learning/view/screen/signIn/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-import '../../../res/assets_res.dart';
+import '../../../utill/images_paths.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -126,7 +125,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
                         ),
                       ],
                     ),
-                    child: Image.asset(AssetsRes.E_LOGO),
+                    child: Image.asset(AppImagePath.E_LOGO),
                   ),
                 ),
               ),

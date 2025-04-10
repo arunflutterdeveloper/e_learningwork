@@ -6,9 +6,8 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../../res/assets_res.dart';
 import '../../../utill/app_colors.dart';
+import '../../../utill/images_paths.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -54,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30),
-            Center(child: Image.asset(AssetsRes.E_LOGO,height: 150)),
+            Center(child: Image.asset(AppImagePath.E_LOGO,height: 150)),
             const SizedBox(height: 32),
             const Text('Sign Up',
                 style: TextStyle(

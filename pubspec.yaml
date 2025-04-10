@@ -43,7 +43,13 @@ dev_dependencies:
   get: ^4.7.2
   gap: ^3.0.1
   country_code_picker: ^3.0.0
-
+  flutter_screenutil: ^5.8.3
+  firebase_core: ^3.8.0
+  cloud_firestore: ^5.6.0
+  firebase_storage: ^12.3.6
+  firebase_auth: ^5.3.3
+  firebase_messaging: ^15.1.5
+  http: ^0.13.5
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -95,11 +101,46 @@ flutter:
   # see https://flutter.dev/to/font-from-package
   assets:
     - assets/countrycode.json
-    - assets/images/apple.svg
-    - assets/images/e_logo.png
-    - assets/images/facebook.svg
-    - assets/images/google.svg
-    - assets/images/logo_blue.png
-    - assets/images/onboarding_1.png
-    - assets/images/onboarding_2.png
-    - assets/images/onboarding_3.png
+    - assets/icons/Back10.svg
+    - assets/icons/Bulb.svg
+    - assets/icons/Checked.svg
+    - assets/icons/Explore.svg
+    - assets/icons/IsoArrowDown.svg
+    - assets/icons/Library.svg
+    - assets/icons/ListenLitLogoSmall.svg
+    - assets/icons/ListenLitlogo.svg
+    - assets/icons/ListenLitlogoBlack.svg
+    - assets/icons/MasterCard.svg
+    - assets/icons/Pause.svg
+    - assets/icons/RightSkipForward.svg
+    - assets/icons/Signout.svg
+    - assets/icons/SkipForward.svg
+    - assets/icons/SkipForward10.svg
+    - assets/icons/Trash.svg
+    - assets/icons/UilClock.svg
+    - assets/icons/UilHeadphones.svg
+    - assets/icons/UploadIcon.svg
+    - assets/icons/backIcon.svg
+    - assets/icons/bookmark.svg
+    - assets/icons/cancel.svg
+    - assets/icons/card.svg
+    - assets/icons/cunderline.svg
+    - assets/icons/expand.svg
+    - assets/icons/gg_read.svg
+    - assets/icons/glasses.svg
+    - assets/icons/help.svg
+    - assets/icons/home.svg
+    - assets/icons/homewhite.svg
+    - assets/icons/linearLine.svg
+    - assets/icons/musicicon.svg
+    - assets/icons/profileIcon.svg
+    - assets/icons/star.svg
+    - assets/icons/ticksvg.svg
+    - assets/icons/uil_book.svg
+    - assets/icons/uil_bookmark.svg
+    - assets/icons/uil_fire.svg
+    - assets/icons/uil_forward.svg
+    - assets/icons/uil_play.svg
+    - assets/icons/visa.svg
+    - assets/images/
+    - assets/images/e_banner.png

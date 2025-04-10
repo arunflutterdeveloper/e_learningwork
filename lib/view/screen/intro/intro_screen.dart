@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../res/assets_res.dart';
 import '../../../utill/app_colors.dart';
 import '../../../utill/dimensions.dart';
+import '../../../utill/images_paths.dart';
 import '../../widgets/custom_text_bold.dart';
 import '../signIn/sign_in_screen.dart';
 import 'package:gap/gap.dart';
@@ -354,17 +354,17 @@ class Onboarding {
 List<Onboarding> onboardingList = [
   Onboarding(
     description: 'Learn English easily with interactive \n lessons and real-life conversations.',
-    image: AssetsRes.ONBOARDING_1,
+    image: AppImagePath.ONBOARDING_1,
     title: 'Start Speaking Confidently',
   ),
   Onboarding(
     description: 'Build your vocabulary with fun \n games and daily practice exercises.',
-    image: AssetsRes.ONBOARDING_2,
+    image: AppImagePath.ONBOARDING_2,
     title: 'Grow Your Vocabulary',
   ),
   Onboarding(
     description: 'Track your progress and reach \n your language goals faster.',
-    image: AssetsRes.ONBOARDING_3,
+    image: AppImagePath.ONBOARDING_3,
     title: 'Achieve Your Goals',
   ),
 ];
